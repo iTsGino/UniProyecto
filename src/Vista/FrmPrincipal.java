@@ -22,12 +22,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         return txtPas.getText();
     }
     public void LeerDatos(){
-        FrmAgencia fr = new FrmAgencia();
+        FrmRutas fr = new FrmRutas();
         Cu.setUsu(Usuario());
         Cu.setPasUsu(Password());
         int Res = Obj.GetUsuario(Cu);
         if(Res == 1){
-            System.out.println("Bienvenido, "+Cu.getUsu());
+            System.out.println("Bienvenido, "+Cu.getNomUsu());
             fr.setVisible(true);
             
         } else {
