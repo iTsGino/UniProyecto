@@ -14,6 +14,11 @@ public class ClaseRuta {
         this.NomRut = NomRut;
         this.PagCho = PagCho;
     }
+    public String NombreRuta(){
+        String Cad = CodRut+" - "+NomRut;
+        return Cad;
+    }
+    
     public double getPagCho() {
         return PagCho;
     }

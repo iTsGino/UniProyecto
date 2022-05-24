@@ -1,22 +1,65 @@
 
 package Vista;
 
+import Controlador.ClaseConexion;
+import Controlador.NegocioRuta;
+import Modelo.ClaseRuta;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class FrmRutas extends javax.swing.JFrame {
     
     DefaultTableModel dt;
+    NegocioRuta ObjRut = new NegocioRuta();
+    ClaseRuta Cr;
     
     public FrmRutas() {
         initComponents();
         setLocationRelativeTo(null);
         Cabecera();
+        LlenaTabla();
     }
+    public static String NomRut = "";
     
     public void Cabecera(){
         dt = (DefaultTableModel) Tabla1.getModel();
         dt.setRowCount(0);
     }
+    public String Codigo(){
+        return txtCod.getText();
+    }
+    public String NombreRuta(){
+        return txtRut.getText();
+    }
+    public double Pago(){
+        return Double.parseDouble(txtPag.getText());
+    }
+    public void LlenaTabla(){
+        for(ClaseRuta x: ObjRut.ListaRutas()){
+            Object Vec[] = {x.getCodRut(), x.getNomRut(), x.getPagCho()};
+            dt.addRow(Vec);
+        }
+    }
+    public void LeerDatos(){
+        Cr = new ClaseRuta(Codigo(), NombreRuta(), Pago());
+        ObjRut.AgregaRuta(Cr);
+        JOptionPane.showMessageDialog(null, "¡REGISTRO AÑADIDO!");
+        Cabecera();
+        LlenaTabla();
+    }
+    public String GetNombreRuta(){
+        FrmPasajero FrmPas = new FrmPasajero();
+        int Filas = Tabla1.getSelectedRowCount();
+        if(Filas == 0){
+            JOptionPane.showMessageDialog(null, "¡Error, Seleccione una Fila!");
+        } else {
+            int Fila = Tabla1.getSelectedRow();
+            NomRut = Tabla1.getValueAt(Fila, 1).toString();
+            FrmPas.setVisible(true);
+        }
+        return NomRut;
+    }
+    
     public void Limpia(){
         txtCod.setText("");
         txtRut.setText("");
@@ -69,19 +112,19 @@ public class FrmRutas extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.GridLayout(3, 2));
 
         LblCod.setBackground(new java.awt.Color(240, 255, 253));
-        LblCod.setFont(new java.awt.Font("Bodoni MT", 1, 14)); // NOI18N
+        LblCod.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 14)); // NOI18N
         LblCod.setText(" CODIGO RUTA:");
         jPanel1.add(LblCod);
         jPanel1.add(txtCod);
 
         LblNom.setBackground(new java.awt.Color(240, 255, 253));
-        LblNom.setFont(new java.awt.Font("Bodoni MT", 1, 14)); // NOI18N
+        LblNom.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 14)); // NOI18N
         LblNom.setText(" NOMBRE RUTA:");
         jPanel1.add(LblNom);
         jPanel1.add(txtRut);
 
         LblPag.setBackground(new java.awt.Color(240, 255, 253));
-        LblPag.setFont(new java.awt.Font("Bodoni MT", 1, 14)); // NOI18N
+        LblPag.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 14)); // NOI18N
         LblPag.setText(" PAGO CHOFER: ");
         jPanel1.add(LblPag);
         jPanel1.add(txtPag);
@@ -161,11 +204,13 @@ public class FrmRutas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgrActionPerformed
+        LeerDatos();
         Limpia();
     }//GEN-LAST:event_btnAgrActionPerformed
 
     private void btnPasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPasActionPerformed
-        
+        GetNombreRuta();
+        this.setVisible(false);
     }//GEN-LAST:event_btnPasActionPerformed
 
     /**

@@ -5,14 +5,14 @@ public class ClasePasajero {
     private String NroBol;
     private String ViaNro;
     private String NomPas;
-    private int NroAsi;
+    private double NroAsi;
     private String TipAsi;
     private double PagVia;
 
     public ClasePasajero() {
     }
 
-    public ClasePasajero(String NroBol, String ViaNro, String NomPas, int NroAsi, String TipAsi, double PagVia) {
+    public ClasePasajero(String NroBol, String ViaNro, String NomPas, double NroAsi, String TipAsi, double PagVia) {
         this.NroBol = NroBol;
         this.ViaNro = ViaNro;
         this.NomPas = NomPas;
@@ -44,10 +44,10 @@ public class ClasePasajero {
     public void setNomPas(String NomPas) {
         this.NomPas = NomPas;
     }
-    public int getNroAsi() {
+    public double getNroAsi() {
         return NroAsi;
     }
-    public void setNroAsi(int NroAsi) {
+    public void setNroAsi(double NroAsi) {
         this.NroAsi = NroAsi;
     }
     public String getTipAsi() {

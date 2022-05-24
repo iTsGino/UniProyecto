@@ -5,12 +5,12 @@ import Controlador.NegocioUsuario;
 import Modelo.ClaseUsuario;
 import javax.swing.JOptionPane;
 
-public class FrmPrincipal extends javax.swing.JFrame {
+public class FrmLogueo extends javax.swing.JFrame {
     
     ClaseUsuario Cu = new ClaseUsuario();
     NegocioUsuario Obj = new NegocioUsuario();
     
-    public FrmPrincipal() {
+    public FrmLogueo() {
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -27,9 +27,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         Cu.setPasUsu(Password());
         int Res = Obj.GetUsuario(Cu);
         if(Res == 1){
-            System.out.println("Bienvenido, "+Cu.getNomUsu());
+            System.out.println("Bienvenido, "+Cu.getUsu());
             fr.setVisible(true);
-            
+            dispose();
         } else {
             LblAle.setText("¡Hubo un Problema con su Inicio de Sesión!");
         }
@@ -52,33 +52,41 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         btnIng = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        btnReg = new javax.swing.JButton();
+        btnSal = new javax.swing.JButton();
         LblAle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel3.setBackground(new java.awt.Color(240, 255, 253));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(240, 255, 253));
         jPanel1.setLayout(new java.awt.GridLayout(2, 2));
 
+        LblUsu.setFont(new java.awt.Font("Berlin Sans FB Demi", 0, 14)); // NOI18N
         LblUsu.setText(" USUARIO:");
         jPanel1.add(LblUsu);
         jPanel1.add(txtUsu);
 
+        LblPas.setFont(new java.awt.Font("Berlin Sans FB Demi", 0, 14)); // NOI18N
         LblPas.setText(" CONTRASEÑA:");
         jPanel1.add(LblPas);
         jPanel1.add(txtPas);
 
-        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 94, 340, 100));
+        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 340, 100));
 
         jLabel1.setFont(new java.awt.Font("Berlin Sans FB Demi", 0, 21)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("AGENCIA DE VIAJES");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 220, 40));
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 220, 40));
 
+        jPanel2.setBackground(new java.awt.Color(240, 255, 253));
         jPanel2.setLayout(new java.awt.GridLayout(1, 3));
 
+        btnIng.setBackground(new java.awt.Color(204, 204, 204));
+        btnIng.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
+        btnIng.setForeground(new java.awt.Color(51, 51, 255));
         btnIng.setText("INGRESAR");
         btnIng.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,30 +96,32 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jPanel2.add(btnIng);
         jPanel2.add(jLabel2);
 
-        btnReg.setText("REGISTRAR");
-        btnReg.addActionListener(new java.awt.event.ActionListener() {
+        btnSal.setBackground(new java.awt.Color(204, 204, 204));
+        btnSal.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
+        btnSal.setForeground(new java.awt.Color(51, 51, 255));
+        btnSal.setText("SALIR");
+        btnSal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegActionPerformed(evt);
+                btnSalActionPerformed(evt);
             }
         });
-        jPanel2.add(btnReg);
+        jPanel2.add(btnSal);
 
-        jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 205, 310, 60));
+        jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 310, 40));
 
+        LblAle.setFont(new java.awt.Font("Bodoni MT", 0, 12)); // NOI18N
         LblAle.setForeground(new java.awt.Color(255, 51, 51));
-        jPanel3.add(LblAle, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 230, 20));
+        jPanel3.add(LblAle, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 230, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
         );
 
         pack();
@@ -122,9 +132,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         Limpia();
     }//GEN-LAST:event_btnIngActionPerformed
 
-    private void btnRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRegActionPerformed
+    private void btnSalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -143,20 +153,21 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLogueo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLogueo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLogueo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLogueo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmPrincipal().setVisible(true);
+                new FrmLogueo().setVisible(true);
             }
         });
     }
@@ -166,7 +177,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel LblPas;
     private javax.swing.JLabel LblUsu;
     private javax.swing.JButton btnIng;
-    private javax.swing.JButton btnReg;
+    private javax.swing.JButton btnSal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
