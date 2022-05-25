@@ -3,30 +3,85 @@ package Vista;
 
 import Controlador.NegocioPasajero;
 import Modelo.ClaseGetPasajero;
+import Modelo.ClasePasajero;
+import Modelo.ClaseViaje;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class FrmPasajero extends javax.swing.JFrame {
     
     DefaultTableModel dt;
     //FrmRutas FrmRut = new FrmRutas();
-    NegocioPasajero ObjPas = new NegocioPasajero();
+    NegocioPasajero Np = new NegocioPasajero();
+    ClasePasajero Cp;
     
     public FrmPasajero() {
         initComponents();
         setLocationRelativeTo(null);
         Cabecera();
+        Cabecera2();
+        MuestraImagen();
     }
     FrmRutas Rut = new FrmRutas();
     
     public void Cabecera(){
         dt = (DefaultTableModel) Tabla1.getModel();
         dt.setRowCount(0);
+        LlenaCombo();
     }
-//    public void LlenaTabla(){
-//        for(ClaseGetPasajero x: ObjPas.GetPasajeroRuta(Cod)){
-//            Object Vec[] = {};
-//        }
-//    }
+    public void Cabecera2(){
+        dt = (DefaultTableModel) Tabla2.getModel();
+        dt.setRowCount(0);
+    }
+    
+    public String NroBoleto(){
+        return txtBol.getText();
+    }
+    public String NroViaje(){
+        String CodVia = CmbVia.getSelectedItem().toString();
+        if(!CodVia.equals("ELEGIR:"))
+            CodVia = CodVia.substring(0, 6);
+        return CodVia;
+    }
+    public String NombrePasajero(){
+        return txtNom.getText();
+    }
+    public double NroAsiento(){
+        return Double.parseDouble(txtAsi.getText());
+    }
+    public String TipoAsiento(){
+        return txtTip.getText();
+    }
+    public double Pago(){
+        return Double.parseDouble(txtPag.getText());
+    }
+    
+    public void LlenaTabla(String Cod){
+        Cabecera();
+        for(ClaseGetPasajero x: Np.GetPasajeroRuta(Cod)){
+            Object Vec[] = {x.getViaNro(), x.getNomPas(), x.getNroAsi(), x.getHroVia(), x.getFecVia(), x.getCosVia()};
+            dt.addRow(Vec);
+        }
+    }
+    public void LlenaCombo(){
+        for(ClaseViaje x: Np.GetViaje()){
+            CmbVia.addItem(x.NroViaje());
+        }
+    }
+    public void MuestraImagen(){
+        ImageIcon Img = new ImageIcon(getClass().getResource("/Imagenes/Viaje.jpg"));
+        Image Tam = Img.getImage().getScaledInstance(txtIma.getWidth(), txtIma.getHeight(), Image.SCALE_SMOOTH);
+        txtIma.setIcon(new ImageIcon(Tam));
+    }
+    public void LlenaTablaPasajero(){
+        Cabecera();
+        for(ClasePasajero x: Np.ListadoPasajero()){
+            Object Vec[] = {x.getNroBol(), x.getViaNro(), x.getNomPas(), x.getNroAsi(), x.getTipAsi(), x.getPagVia()};
+            dt.addRow(Vec);
+        }
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -38,6 +93,9 @@ public class FrmPasajero extends javax.swing.JFrame {
         Tabla1 = new javax.swing.JTable();
         btnVer = new javax.swing.JButton();
         btnReg = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtIma = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         LblBol = new javax.swing.JLabel();
@@ -55,6 +113,8 @@ public class FrmPasajero extends javax.swing.JFrame {
         btnAgr = new javax.swing.JButton();
         btnEli = new javax.swing.JButton();
         btnEdi = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        Tabla2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(240, 255, 253));
@@ -96,31 +156,62 @@ public class FrmPasajero extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Berlin Sans FB Demi", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(51, 102, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("LISTADO DE LOS PASAJEROS");
+
+        jLabel2.setFont(new java.awt.Font("Berlin Sans FB Demi", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 102, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("EN BASE A UNA RUTA");
+
+        txtIma.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtIma.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(28, 28, 28)
                 .addComponent(btnVer)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnReg, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addGap(36, 36, 36))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(45, 45, 45)
+                        .addComponent(txtIma, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtIma, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addGap(49, 49, 49)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReg, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
 
         jTabbedPane1.addTab("LECTURA", jPanel1);
@@ -192,34 +283,54 @@ public class FrmPasajero extends javax.swing.JFrame {
             }
         });
 
+        Tabla2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "N° BOLETO", "N° VIAJE", "PASAJERO", "N° ASIENTO", "TIPO ASIENTO", "PAGO"
+            }
+        ));
+        jScrollPane2.setViewportView(Tabla2);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(btnAgr, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                .addComponent(btnEdi, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67)
-                .addComponent(btnEli, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnAgr, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(93, 93, 93)
+                        .addComponent(btnEdi, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(90, 90, 90)
+                        .addComponent(btnEli, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(14, 14, 14))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgr, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEli, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEdi, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnEdi, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAgr, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnEli, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("REGISTRO", jPanel2);
@@ -239,15 +350,20 @@ public class FrmPasajero extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
-        System.out.println("ERROORRR: "+Rut.NomRut);
+        //System.out.println("ERROORRR: "+Rut.NomRut);
+        String Cod = Rut.NomRut;
+        LlenaTabla(Cod);
     }//GEN-LAST:event_btnVerActionPerformed
 
     private void btnRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegActionPerformed
-        //dispose();
+        Rut.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnRegActionPerformed
 
     private void btnAgrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgrActionPerformed
-        // TODO add your handling code here:
+        Cp = new ClasePasajero(NroBoleto(), NroViaje(), NombrePasajero(), NroAsiento(), TipoAsiento(), Pago());
+        Np.AgregaPasajero(Cp);
+        JOptionPane.showMessageDialog(null, "¡REGISTRO AÑADIDO!");
     }//GEN-LAST:event_btnAgrActionPerformed
 
     private void btnEliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliActionPerformed
@@ -302,18 +418,23 @@ public class FrmPasajero extends javax.swing.JFrame {
     private javax.swing.JLabel LblPag;
     private javax.swing.JLabel LblTip;
     private javax.swing.JTable Tabla1;
+    private javax.swing.JTable Tabla2;
     private javax.swing.JButton btnAgr;
     private javax.swing.JButton btnEdi;
     private javax.swing.JButton btnEli;
     private javax.swing.JButton btnReg;
     private javax.swing.JButton btnVer;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField txtAsi;
     private javax.swing.JTextField txtBol;
+    private javax.swing.JLabel txtIma;
     private javax.swing.JTextField txtNom;
     private javax.swing.JTextField txtPag;
     private javax.swing.JTextField txtTip;

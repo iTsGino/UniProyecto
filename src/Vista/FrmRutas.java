@@ -56,6 +56,7 @@ public class FrmRutas extends javax.swing.JFrame {
             int Fila = Tabla1.getSelectedRow();
             NomRut = Tabla1.getValueAt(Fila, 1).toString();
             FrmPas.setVisible(true);
+            this.setVisible(false);
         }
         return NomRut;
     }
@@ -210,7 +211,6 @@ public class FrmRutas extends javax.swing.JFrame {
 
     private void btnPasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPasActionPerformed
         GetNombreRuta();
-        this.setVisible(false);
     }//GEN-LAST:event_btnPasActionPerformed
 
     /**

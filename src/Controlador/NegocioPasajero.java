@@ -11,6 +11,7 @@ public class NegocioPasajero implements InterfacePasajero{
     ClaseConexion Obj = new ClaseConexion();
     List<ClasePasajero> Lis;
     List<ClaseViaje> Lis2;
+    List<ClaseGetPasajero> Lis3;
     ClasePasajero Cp;
     ClaseGetPasajero Cg;
     ClaseViaje Cv;
@@ -118,21 +119,23 @@ public class NegocioPasajero implements InterfacePasajero{
     }
     
     @Override
-    public ClaseGetPasajero GetPasajeroRuta(String Cod){
+    public List<ClaseGetPasajero> GetPasajeroRuta(String Cod){
+        Lis3 = new ArrayList();
         Con = Obj.GetConexion();
         try {
             ps = Con.prepareStatement("select v.VIANRO, Nom_pas, Nro_asi, VIAHRS, VIAFCH, COSVIA from "
-                    + " PASAJEROS p, VIAJE v, RUTA r where v.VIANRO=p.VIANRO and v.RUTCOD=r.RUTCOD and r.RUNOM = ?");
+                    + " PASAJEROS p, VIAJE v, RUTA r where v.VIANRO=p.VIANRO and v.RUTCOD=r.RUTCOD and r.RUTNOM = ? ");
             ps.setString(1, Cod);
             rs = ps.executeQuery();
-            while (true) {                
+            while (rs.next()) {                
                 Cg = new ClaseGetPasajero();
-                Cg.setViaNro(rs.getString("VIANRO"));
-                Cg.setNomPas(rs.getString("Nom_pas"));
-                Cg.setNroAsi(rs.getDouble("Nro_asi"));
-                Cg.setViaNro(rs.getString("VIAHRS"));
-                Cg.setFecVia(rs.getDate("VIAFCH"));
-                Cg.setCosVia(rs.getDouble("COSVIA"));
+                Cg.setViaNro(rs.getString(1));
+                Cg.setNomPas(rs.getString(2));
+                Cg.setNroAsi(rs.getDouble(3));
+                Cg.setHroVia(rs.getString(4));
+                Cg.setFecVia(rs.getDate(5));
+                Cg.setCosVia(rs.getDouble(6));
+                Lis3.add(Cg);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -144,7 +147,7 @@ public class NegocioPasajero implements InterfacePasajero{
                 System.out.println("Error: "+e);
             }
         }
-        return Cg;
+        return Lis3;
     }
 
     @Override

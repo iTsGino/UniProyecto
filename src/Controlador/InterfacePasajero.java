@@ -12,6 +12,6 @@ public interface InterfacePasajero {
     public void AgregaPasajero(ClasePasajero p);
     public boolean EditaPasajero(ClasePasajero p);
     public boolean EliminaPasajero(String Cod);
-    public ClaseGetPasajero GetPasajeroRuta(String Cod);
+    public List<ClaseGetPasajero> GetPasajeroRuta(String Cod);
     public List<ClaseViaje> GetViaje();
 }

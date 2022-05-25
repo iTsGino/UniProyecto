@@ -14,7 +14,9 @@ public class ClaseViaje {
         this.NroVia = NroVia;
         this.FecVia = FecVia;
     }
-    
+    public String NroViaje(){
+        return NroVia+" - "+FecVia;
+    }
     public String getNroVia() {
         return NroVia;
     }

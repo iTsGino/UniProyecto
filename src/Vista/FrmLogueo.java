@@ -3,6 +3,8 @@ package Vista;
 
 import Controlador.NegocioUsuario;
 import Modelo.ClaseUsuario;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class FrmLogueo extends javax.swing.JFrame {
@@ -13,6 +15,7 @@ public class FrmLogueo extends javax.swing.JFrame {
     public FrmLogueo() {
         initComponents();
         setLocationRelativeTo(null);
+        MuestraImagen();
     }
     
     public String Usuario(){
@@ -34,6 +37,11 @@ public class FrmLogueo extends javax.swing.JFrame {
             LblAle.setText("¡Hubo un Problema con su Inicio de Sesión!");
         }
     }
+    public void MuestraImagen(){
+        ImageIcon Img = new ImageIcon(getClass().getResource("/Imagenes/Login.jpg"));
+        Image Tam = Img.getImage().getScaledInstance(txtImg.getWidth(), txtImg.getHeight(), Image.SCALE_SMOOTH);
+        txtImg.setIcon(new ImageIcon(Tam));
+    }
     public void Limpia(){
         txtUsu.setText("");
         txtPas.setText("");
@@ -54,6 +62,7 @@ public class FrmLogueo extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         btnSal = new javax.swing.JButton();
         LblAle = new javax.swing.JLabel();
+        txtImg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -73,13 +82,13 @@ public class FrmLogueo extends javax.swing.JFrame {
         jPanel1.add(LblPas);
         jPanel1.add(txtPas);
 
-        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 340, 100));
+        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 310, 100));
 
         jLabel1.setFont(new java.awt.Font("Berlin Sans FB Demi", 0, 21)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("AGENCIA DE VIAJES");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 220, 40));
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 220, 40));
 
         jPanel2.setBackground(new java.awt.Color(240, 255, 253));
         jPanel2.setLayout(new java.awt.GridLayout(1, 3));
@@ -107,21 +116,30 @@ public class FrmLogueo extends javax.swing.JFrame {
         });
         jPanel2.add(btnSal);
 
-        jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 310, 40));
+        jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, 310, 50));
 
-        LblAle.setFont(new java.awt.Font("Bodoni MT", 0, 12)); // NOI18N
+        LblAle.setFont(new java.awt.Font("Bodoni MT", 0, 13)); // NOI18N
         LblAle.setForeground(new java.awt.Color(255, 51, 51));
-        jPanel3.add(LblAle, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 230, 20));
+        LblAle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel3.add(LblAle, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 60, 270, 30));
+
+        txtImg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtImg.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel3.add(txtImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 150, 150));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -183,6 +201,7 @@ public class FrmLogueo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel txtImg;
     private javax.swing.JPasswordField txtPas;
     private javax.swing.JTextField txtUsu;
     // End of variables declaration//GEN-END:variables

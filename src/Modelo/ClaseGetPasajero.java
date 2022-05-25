@@ -1,6 +1,6 @@
 
 package Modelo;
-import java.util.Date;
+import java.util.*;
 
 public class ClaseGetPasajero {
     private String ViaNro;
