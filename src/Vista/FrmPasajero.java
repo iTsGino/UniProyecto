@@ -4,19 +4,26 @@ import Controlador.NegocioPasajero;
 import Modelo.ClaseGetPasajero;
 import Modelo.ClasePasajero;
 import Modelo.ClaseViaje;
+import Modelo.ClasePlantillaPdf;
 import java.awt.Image;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 
 public class FrmPasajero extends javax.swing.JFrame {
     
+    //Atributos para el formulario
     DefaultTableModel dt;
     DefaultTableModel dt2;
     //FrmRutas FrmRut = new FrmRutas();
     NegocioPasajero Np = new NegocioPasajero();
     ClasePasajero Cp;
+    List<ClaseGetPasajero> Lis = new ArrayList();;
+    SimpleDateFormat Df = new SimpleDateFormat("yyyy-MM-dd");   //Para dar formato a la fecha
     
+    //Metodo Constructor
     public FrmPasajero() {
         initComponents();
         setLocationRelativeTo(null);
@@ -27,46 +34,55 @@ public class FrmPasajero extends javax.swing.JFrame {
         LlenaTablaPasajero();
         CapturaFila();
     }
-    FrmRutas Rut = new FrmRutas();
+    FrmRutas Rut = new FrmRutas();  //Para recuperar la Ruta selecionada en el 'FrmRutas'
     
+    //Metodo para la cabecera de la tabla PasajeroRuta
     public void Cabecera(){
         dt = (DefaultTableModel) Tabla1.getModel();
         dt.setRowCount(0);
     }
+    //Metodo para la cabecera de la tabla Pasajero
     public void Cabecera2(){
         dt2 = (DefaultTableModel) Tabla2.getModel();
         dt2.setRowCount(0);
     }
-    
+    //Metodo para retornar el NroBoleto
     public String NroBoleto(){
         return txtBol.getText();
     }
+    //Metodo para retornar el NroViaje y llenar el combo con datos
     public String NroViaje(){
         String CodVia = CmbVia.getSelectedItem().toString();
         if(!CodVia.equals("ELEGIR:"))
             CodVia = CodVia.substring(0, 6);
         return CodVia;
     }
+    //Metodo para retornar el Nombre del Pasajero
     public String NombrePasajero(){
         return txtNom.getText();
     }
+    //Metodo para retornar el NroAsiento
     public double NroAsiento(){
         return Double.parseDouble(txtAsi.getText());
     }
+    //Metodo para retornar el TipoAsiento
     public String TipoAsiento(){
         return txtTip.getText();
     }
+    //Metodo para retornar el Pago
     public double Pago(){
         return Double.parseDouble(txtPag.getText());
     }
-    
+    //Metodo llenar la tabla PasajeroRuta
     public void LlenaTabla(String Cod){
         Cabecera();
         for(ClaseGetPasajero x: Np.GetPasajeroRuta(Cod)){
             Object Vec[] = {x.getViaNro(), x.getNomPas(), x.getNroAsi(), x.getHroVia(), x.getFecVia(), x.getCosVia()};
+            Lis.add(x);
             dt.addRow(Vec);
         }
     }
+    //Metodo llenar la tabla Pasajero
     public void LlenaTablaPasajero(){
         Cabecera2();
         for(ClasePasajero x: Np.ListadoPasajero()){
@@ -74,36 +90,40 @@ public class FrmPasajero extends javax.swing.JFrame {
             dt2.addRow(Vec);
         }
     }
+    //Metodo para llenar el combo con el Codigo de Viaje y la fecha del Viaje
     public void LlenaCombo(){
         for(ClaseViaje x: Np.GetViaje()){
             CmbVia.addItem(x.NroViaje());
         }
     }
-    public void EliminaDatos(){
+    //Metodo para Eliminar los datos de la tabla
+    public void EliminaDatos(){ //Inicio Metodo EliminaDatos
         int Filas = Tabla2.getSelectedRowCount();
         String Cod;
         if(Filas == 0){
             JOptionPane.showMessageDialog(null, "¡Error, Seleccione una Fila!");
-        } else {
+        } else {    //Inicio Else
             int Fila = Tabla2.getSelectedRow();
             Cod = Tabla2.getValueAt(Fila, 0).toString();
             Np.EliminaPasajero(Cod);
             JOptionPane.showMessageDialog(null, "¡Registro Eliminado!");
             dt2.removeRow(Fila);
-        }
-    }
+        }   //Fin Else
+    }   //Fin Metodo EliminaDatos
     
+    //Metodo para Mostrar una Imagen
     public void MuestraImagen(){
-        ImageIcon Img = new ImageIcon(getClass().getResource("/Imagenes/Viaje.jpg"));
-        Image Tam = Img.getImage().getScaledInstance(txtIma.getWidth(), txtIma.getHeight(), Image.SCALE_SMOOTH);
-        txtIma.setIcon(new ImageIcon(Tam));
+        ImageIcon Img = new ImageIcon(getClass().getResource("/Imagenes/Viaje.jpg"));   //Cargar la Imagen
+        Image Tam = Img.getImage().getScaledInstance(txtIma.getWidth(), txtIma.getHeight(), Image.SCALE_SMOOTH);    //Ajustar el tamño
+        txtIma.setIcon(new ImageIcon(Tam)); //Mandar la Imagen al Label
     }
+    //Metodo para Capturar la Fila Seleccionada de la Tabla Pasajero
     public void CapturaFila() {
         Tabla2.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 int Fil;
-                if (Tabla2.getSelectedRow() != -1) {
+                if (Tabla2.getSelectedRow() != -1) {    //Inicio If
                     Fil = Tabla2.getSelectedRow();
                     txtBol.setText(Tabla2.getValueAt(Fil, 0).toString());
                     CmbVia.setSelectedItem(Tabla2.getValueAt(Fil, 1));
@@ -111,10 +131,11 @@ public class FrmPasajero extends javax.swing.JFrame {
                     txtAsi.setText(Tabla2.getValueAt(Fil, 3).toString());
                     txtTip.setText(Tabla2.getValueAt(Fil, 4).toString());
                     txtPag.setText(Tabla2.getValueAt(Fil, 5).toString());
-                }
+                }   //Fin If
             }
         });
     }
+    //Metodo para limpiar los campos
     public void Limpia(){
         txtBol.setText("");
         CmbVia.setSelectedIndex(0);
@@ -137,6 +158,7 @@ public class FrmPasajero extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtIma = new javax.swing.JLabel();
+        btnExpPdf = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         LblBol = new javax.swing.JLabel();
@@ -212,6 +234,16 @@ public class FrmPasajero extends javax.swing.JFrame {
         txtIma.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtIma.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
+        btnExpPdf.setBackground(new java.awt.Color(204, 204, 204));
+        btnExpPdf.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
+        btnExpPdf.setForeground(new java.awt.Color(51, 51, 255));
+        btnExpPdf.setText("EXPORTAR PDF");
+        btnExpPdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExpPdfActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -219,6 +251,8 @@ public class FrmPasajero extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(btnVer)
+                .addGap(72, 72, 72)
+                .addComponent(btnExpPdf)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnReg, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36))
@@ -234,7 +268,7 @@ public class FrmPasajero extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(45, 45, 45)
                         .addComponent(txtIma, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,7 +287,8 @@ public class FrmPasajero extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReg, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnReg, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExpPdf, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23))
         );
 
@@ -442,6 +477,13 @@ public class FrmPasajero extends javax.swing.JFrame {
         LlenaTablaPasajero();
     }//GEN-LAST:event_btnIniActionPerformed
 
+    private void btnExpPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpPdfActionPerformed
+        Date Fch = new Date();
+        String Nom = JOptionPane.showInputDialog("Ingrese su Nombre:");
+        ClasePlantillaPdf Pp = new ClasePlantillaPdf(Nom, Df.format(Fch), Lis);
+        Pp.CrearPlantilla();
+    }//GEN-LAST:event_btnExpPdfActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -490,6 +532,7 @@ public class FrmPasajero extends javax.swing.JFrame {
     private javax.swing.JButton btnAgr;
     private javax.swing.JButton btnEdi;
     private javax.swing.JButton btnEli;
+    private javax.swing.JButton btnExpPdf;
     private javax.swing.JButton btnIni;
     private javax.swing.JButton btnReg;
     private javax.swing.JButton btnVer;

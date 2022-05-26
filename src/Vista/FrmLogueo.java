@@ -1,47 +1,55 @@
 
 package Vista;
-
 import Controlador.NegocioUsuario;
 import Modelo.ClaseUsuario;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 public class FrmLogueo extends javax.swing.JFrame {
     
+    //Atributos para el Formulario
     ClaseUsuario Cu = new ClaseUsuario();
     NegocioUsuario Obj = new NegocioUsuario();
     
+    //Metodo Constructor
     public FrmLogueo() {
         initComponents();
         setLocationRelativeTo(null);
         MuestraImagen();
     }
     
-    public String Usuario(){
+    //Metodo para Obtener el Usuario
+    public String Usuario(){    //Inicio Usuario
         return txtUsu.getText();
-    }
-    public String Password(){
+    }   //Fin Usuario
+    //Metodo para Obtener el Password
+    public String Password(){   //Inicio Password
         return txtPas.getText();
-    }
+    }   //Inicio Password
+    
+    //Metodo para Leer los datos y Validar el Usuario
     public void LeerDatos(){
-        FrmRutas fr = new FrmRutas();
+        FrmRutas fr = new FrmRutas();   //Creamos un Objeto de FrmRutas
+        //Mandamos datos a los atributos de ClaseUsuario
         Cu.setUsu(Usuario());
         Cu.setPasUsu(Password());
-        int Res = Obj.GetUsuario(Cu);
-        if(Res == 1){
+        int Res = Obj.GetUsuario(Cu);   //Realizamod la validacion de Usuario
+        if(Res == 1){   //Inicio If
             System.out.println("Bienvenido, "+Cu.getUsu());
             fr.setVisible(true);
             dispose();
-        } else {
+            //Fin If
+        } else {    //Inicio Else
             LblAle.setText("¡Hubo un Problema con su Inicio de Sesión!");
-        }
+        }   //Fin Else
     }
+    //Metodo para Mostrar una Imagen
     public void MuestraImagen(){
-        ImageIcon Img = new ImageIcon(getClass().getResource("/Imagenes/Login.jpg"));
-        Image Tam = Img.getImage().getScaledInstance(txtImg.getWidth(), txtImg.getHeight(), Image.SCALE_SMOOTH);
-        txtImg.setIcon(new ImageIcon(Tam));
+        ImageIcon Img = new ImageIcon(getClass().getResource("/Imagenes/Login.jpg"));   //Cargar imagen
+        Image Tam = Img.getImage().getScaledInstance(txtImg.getWidth(), txtImg.getHeight(), Image.SCALE_SMOOTH);    //Ajustar Tamaño Imagen
+        txtImg.setIcon(new ImageIcon(Tam)); //Colocar Imagen en el Label
     }
+    //Metodo para Limpiar los Campos del Formulario
     public void Limpia(){
         txtUsu.setText("");
         txtPas.setText("");

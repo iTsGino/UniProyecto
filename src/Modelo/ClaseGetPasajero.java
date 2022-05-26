@@ -2,7 +2,9 @@
 package Modelo;
 import java.util.*;
 
-public class ClaseGetPasajero {
+public class ClaseGetPasajero { //Inicio ClaseGetPasajero
+
+    //Atrbituos necesarios para la Clase
     private String ViaNro;
     private String NomPas;
     private double NroAsi;
@@ -10,6 +12,7 @@ public class ClaseGetPasajero {
     private Date FecVia;
     private double CosVia;
 
+    //Metodos Constructores
     public ClaseGetPasajero() {
     }
 
@@ -21,6 +24,8 @@ public class ClaseGetPasajero {
         this.FecVia = FecVia;
         this.CosVia = CosVia;
     }
+    
+    //Metodos Get y Set
     public double getCosVia() {
         return CosVia;
     }
@@ -56,5 +61,5 @@ public class ClaseGetPasajero {
     }
     public void setFecVia(Date FecVia) {
         this.FecVia = FecVia;
-    }    
-}
+    }
+}   //Fin ClaseGetPasajero

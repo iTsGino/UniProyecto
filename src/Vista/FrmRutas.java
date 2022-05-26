@@ -1,7 +1,5 @@
 
 package Vista;
-
-import Controlador.ClaseConexion;
 import Controlador.NegocioRuta;
 import Modelo.ClaseRuta;
 import javax.swing.JOptionPane;
@@ -9,37 +7,47 @@ import javax.swing.table.DefaultTableModel;
 
 public class FrmRutas extends javax.swing.JFrame {
     
+    //Atrbituos para el Formulario
     DefaultTableModel dt;
     NegocioRuta ObjRut = new NegocioRuta();
     ClaseRuta Cr;
     
+    //Metodo Constructor
     public FrmRutas() {
         initComponents();
         setLocationRelativeTo(null);
         Cabecera();
         LlenaTabla();
     }
+    //Atributo que toma el Valor del Nombre de la Ruta
     public static String NomRut = "";
     
+    //Metodo para la Cabecera de la Tabla
     public void Cabecera(){
         dt = (DefaultTableModel) Tabla1.getModel();
         dt.setRowCount(0);
     }
+    //Metodo que retorna el Codigo
     public String Codigo(){
         return txtCod.getText();
     }
+    //Metodo que retorna el Nombre de la Ruta
     public String NombreRuta(){
         return txtRut.getText();
     }
+    //Metodo que retorna el Pago
     public double Pago(){
         return Double.parseDouble(txtPag.getText());
     }
+    
+    //Metodo que Llena la tabla de Rutas
     public void LlenaTabla(){
-        for(ClaseRuta x: ObjRut.ListaRutas()){
+        for(ClaseRuta x: ObjRut.ListaRutas()){  //Inicio For
             Object Vec[] = {x.getCodRut(), x.getNomRut(), x.getPagCho()};
             dt.addRow(Vec);
-        }
+        }   //Fin For
     }
+    //Metodo para Leer los datos y llenar datos
     public void LeerDatos(){
         Cr = new ClaseRuta(Codigo(), NombreRuta(), Pago());
         ObjRut.AgregaRuta(Cr);
@@ -47,20 +55,22 @@ public class FrmRutas extends javax.swing.JFrame {
         Cabecera();
         LlenaTabla();
     }
-    public String GetNombreRuta(){
-        FrmPasajero FrmPas = new FrmPasajero();
-        int Filas = Tabla1.getSelectedRowCount();
+    //Metodo para Listar los Pasajeros segun la Ruta
+    public String GetNombreRuta(){  //Inicio GetNombreRuta
+        FrmPasajero FrmPas = new FrmPasajero(); //Creamos un Objeto FrmPasajero
+        int Filas = Tabla1.getSelectedRowCount();   //Para saber si seleccionamos una fila
         if(Filas == 0){
             JOptionPane.showMessageDialog(null, "¡Error, Seleccione una Fila!");
-        } else {
-            int Fila = Tabla1.getSelectedRow();
-            NomRut = Tabla1.getValueAt(Fila, 1).toString();
-            FrmPas.setVisible(true);
-            this.setVisible(false);
-        }
+        } else {    //Inicio Else
+            int Fila = Tabla1.getSelectedRow(); //Guardamos el valor de la fila selecinoada
+            NomRut = Tabla1.getValueAt(Fila, 1).toString(); //Guardamos el valor de la celda
+            FrmPas.setVisible(true);    //Para ver el FOrmulario
+            this.setVisible(false); //Ocultamos este Formulario
+        }   //Fin Else
         return NomRut;
-    }
+    }   //Fin GetNombreRuta
     
+    //Metodo para Limpiar los campos
     public void Limpia(){
         txtCod.setText("");
         txtRut.setText("");

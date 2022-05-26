@@ -1,7 +1,7 @@
 
 package Modelo;
 
-public class ClaseUsuario {
+public class ClaseUsuario { //Inicio ClaseUsuario
     //Atributos que se utilizarán
     private String Usu;
     private String PasUsu;
@@ -61,4 +61,4 @@ public class ClaseUsuario {
     public void setTelUsu(int TelUsu) {
         this.TelUsu = TelUsu;
     }
-}
+}   //Fin ClaseUsuario

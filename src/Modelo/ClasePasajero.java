@@ -1,7 +1,9 @@
 
 package Modelo;
 
-public class ClasePasajero {
+public class ClasePasajero {    //Inicio ClasePasajero
+    
+    //Atributos para la Clase
     private String NroBol;
     private String ViaNro;
     private String NomPas;
@@ -9,6 +11,7 @@ public class ClasePasajero {
     private String TipAsi;
     private double PagVia;
 
+    //Meetodos Constructores
     public ClasePasajero() {
     }
 
@@ -20,6 +23,8 @@ public class ClasePasajero {
         this.TipAsi = TipAsi;
         this.PagVia = PagVia;
     }
+    
+    //Metodos Get y Set
     public double getPagVia() {
         return PagVia;
     }
@@ -56,4 +61,4 @@ public class ClasePasajero {
     public void setTipAsi(String TipAsi) {
         this.TipAsi = TipAsi;
     }    
-}
+}   //Fin ClasePasajero

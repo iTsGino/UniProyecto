@@ -2,11 +2,13 @@
 package Modelo;
 import java.util.Date;
 
-public class ClaseViaje {
+public class ClaseViaje {   //Inicio ClaseViaje
     
+    //Atributos para la clase
     private String NroVia;
     private Date FecVia;
 
+    //Metodos Constructores
     public ClaseViaje() {
     }
 
@@ -14,9 +16,13 @@ public class ClaseViaje {
         this.NroVia = NroVia;
         this.FecVia = FecVia;
     }
+    
+    //Metodo para Obtener el Numero de Viaje y la Fecha del Viaje
     public String NroViaje(){
         return NroVia+" - "+FecVia;
     }
+    
+    //Metodos Get y Set
     public String getNroVia() {
         return NroVia;
     }

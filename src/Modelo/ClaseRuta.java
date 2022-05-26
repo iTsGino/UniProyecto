@@ -1,11 +1,14 @@
 
 package Modelo;
 
-public class ClaseRuta {
+public class ClaseRuta {    //Inicio ClaseRuta
+    
+    //Atrbituos para la clase
     private String CodRut;
     private String NomRut;
     private double PagCho;
 
+    //Metodos Constructores
     public ClaseRuta() {
     }
 
@@ -14,11 +17,14 @@ public class ClaseRuta {
         this.NomRut = NomRut;
         this.PagCho = PagCho;
     }
+    
+    //Metodo para Obtener el Codigo y Nombre de la Ruta
     public String NombreRuta(){
         String Cad = CodRut+" - "+NomRut;
         return Cad;
     }
     
+    //Metodos Get y Set
     public double getPagCho() {
         return PagCho;
     }
@@ -37,4 +43,4 @@ public class ClaseRuta {
     public void setNomRut(String NomRut) {
         this.NomRut = NomRut;
     }     
-}
+}   //Fin ClaseRuta
